@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Отзывы о продуктах</h1>
+    <ul class="reviewsList"></ul>
+    <script>
+        // Добавляем обработчик события для загрузки страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewsList = document.querySelector('.reviewsList');
+            const reviews = JSON.parse(localStorage.getItem('reviews')) || []; // Загружаем отзывы из localStorage
+
+
+            reviews.forEach((review, index) => {
+                const reviewItem = document.createElement('li');
+                reviewItem.innerHTML = `
+                    <strong>${review.product}:</strong> ${review.review}
+                    <button onclick="deleteReview(${index})">Удалить</button>
+                `;
+                reviewsList.appendChild(reviewItem);
+            });
+        });
+
+        function deleteReview(index) {
+            const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            reviews.splice(index, 1);
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+            location.reload(); // Перезагружаем страницу, чтобы обновить список отзывов
+        }
+    </script>
+</body>
+</html>
