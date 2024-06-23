@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p class="name-product">Название продукта</p>
+    <select class="name-text">
+      <option value=""></option>
+      <option value="Iphone 11">Iphone 11</option>
+      <option value="Iphone 12">Iphone 12</option>
+      <option value="Iphone 13">Iphone 13</option>
+      <option value="Iphone 14">Iphone 14</option>
+    </select>
+    <p class="review-product">Написать отзыв</p>
+    <textarea class="review-text" rows="4" cols="50"></textarea> <br />
+    <br />
+    <button id="addReviewBtn" class="add-review">Добавить отзыв</button> <br />
+    <br />
+    <a href="./reviewpage.html" class="review-page">Посмотреть все отзывы</a>
+
+    <script>
+      document.getElementById('addReviewBtn').addEventListener('click', function() {
+          const product = document.querySelector('.name-text').value;
+          const review = document.querySelector('.review-text').value.trim(); // получение и отчищение отзыва 
+
+          // Проверка длины отзыва
+          if (review.length < 50 || review.length > 500) {
+              alert('Отзыв должен быть от 50 до 500 символов.');
+              return;
+          }
+
+          // Загрузка существующих отзывов из localStorage
+          const reviews = JSON.parse(localStorage.getItem('reviews'));
+          // Добавляем новый отзык в виде объекта
+          reviews.push({ product, review });
+          // Сохраняем обновленный список отзывов в localStorage
+          localStorage.setItem('reviews', JSON.stringify(reviews));
+
+          alert('Отзыв добавлен.');
+          // Очищаем текстовое поле ввода отзыва
+          document.getElementById('review').value = '';
+      });
+  </script>
+
+    <!-- <script src="./index.js"></script> -->
+  </body>
+</html>
